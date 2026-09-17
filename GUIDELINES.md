@@ -17,9 +17,9 @@ to justify its own doc.
 | **ChaBo-Orchestrator** | The RAG pipeline — rewrite, retrieve, rerank, generate, guardrails. One generic, channel-agnostic API. Publishes one image. | Exists |
 | **ChaBo-Channels** | Independently built services: WhatsApp, speech, web widget etc. One repository, several images, path-filtered CI. | Coming soon |
 | **ChaBo-ChatUI** | The web chat channel — a vendored fork tracking upstream. Publishes one image. | Exists |
-| **ChaBo-Deploy** | Deployment topology only: compose files, vendored third-party wrappers, per-instance configuration. No application source. | Coming soon |
+| **ChaBo-Deploy** | Deployment topology only: compose files, vendored third-party wrappers, per-instance configuration. No application source. | Exists |
 | **ChaBo-Project.github.io** | Public landing page and aggregated documentation, pulled from each repository at build time. | Exists |
-| **`instance-<name>`** | One per deployment: review-worthy content (eval Q&A sets, dated run results, compliance documentation, business-facing description) plus full deployment config — every instance, not just partner-operated ones. Corpus data never lives here — see `ChaBo-Deploy`'s README. | Per-instance; none created yet |
+| **`instance-<name>`** | One per deployment: review-worthy content (eval Q&A sets, dated run results, compliance documentation, business-facing description) plus full deployment config — every instance, not just partner-operated ones. Corpus data never lives here — see `ChaBo-Deploy`'s README. | Per-instance; several live (private). `instance-example` is a public template scoped to the hf-spaces deployment topology only — it doesn't represent a real instance, and real instances stay private. |
 | **`.github`** | This document, `ROADMAP.md`, and `docs/decisions/` — decision records per C3. Also GitHub's own community-health-file location: `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, issue/PR templates, auto-surfaced on every repo in the org that doesn't have its own copy. Named `.github` specifically because that's the literal name GitHub's fallback mechanism requires — not a stylistic choice. Also the source repository for org-wide Discussions (C3) — moderating discussions (pin, lock, convert to issue) only needs Triage-level access here, deliberately lighter than the Write access needed to actually change this document. | Placeholder — being created now |
 
 Work is tracked on one org-level project with saved views (roadmap, per-team, tech-debt
@@ -91,11 +91,15 @@ of truth) — otherwise keep a rollback buffer and prune unreferenced tags.
 
 ## A5. Deployment targets
 
-Four shapes, one codebase. Which applies is a property of the use case.
+Three shapes, one codebase. Which applies is a property of the use case. (An earlier
+"all-in-one container" shape — Qdrant/TEI/orchestrator/chatui as processes in one
+container — is dropped: it would require baking ChaBo-Orchestrator's and ChaBo-ChatUI's
+source into one image, contradicting A3.4, and is redundant with compose-stack-single-VM
+below, which already colocates everything on one VM using each component's own
+published image.)
 
 | Shape | Where | Use |
 |---|---|---|
-| All-in-one container | Hugging Face Space | One-click public demo — not a real deployment, never appears in `list-instances.sh` |
 | Single-container backend + remote inference | HF Space or small VM | PoC with a real corpus |
 | Compose stack, single VM | VM in an EU region (Azure Sweden Central / Germany West Central) | Production, and the reference for adopters |
 | Compose stack, split across VMs | Multiple VMs, one region | Production where a component — typically TEI — needs GPU and the rest doesn't |
