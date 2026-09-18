@@ -10,6 +10,8 @@ built to be deployed by partner organisations with their own data and configurat
 |---|---|
 | [ChaBo-Orchestrator](https://github.com/ChaBo-Project/ChaBo-Orchestrator) | The RAG pipeline — rewrite, retrieve, rerank, generate, guardrails. |
 | [ChaBo-ChatUI](https://github.com/ChaBo-Project/ChaBo-ChatUI) | The web chat channel. |
+| [ChaBo-Deploy](https://github.com/ChaBo-Project/ChaBo-Deploy) | Deployment topology — compose files and Hugging Face Spaces tooling. |
+| [instance-example](https://github.com/ChaBo-Project/instance-example) | Public template for spinning up a new deployment instance. |
 | [ChaBo-Project.github.io](https://chabo-project.github.io/) | Public documentation, aggregated from each repository. |
 
 Deployment topology, partner instances, additional channels/services and upcoming modules are covered in the
